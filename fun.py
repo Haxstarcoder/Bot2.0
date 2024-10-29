@@ -13,8 +13,9 @@ client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
 
-file = open("D:/Code/Python/Bot2.0/All_Words.txt", "r")
-listOfWords = file.read().splitlines()
+with open("D:/Code/Python/Bot2.0/All_Words.txt", "r") as file:
+    listOfWords = file.read().splitlines()
+    file.close
 #Colors
 fail_colour =  discord.Color.red()
 success_colour = discord.Color.green()
@@ -26,7 +27,6 @@ error_embed = discord.Embed(title="Error in Code,Ping Mr.Pancakes")
  
 def choose_random_word(length):
     # Filter words by the specified length
-    
     words = [word for word in listOfWords if len(word) == length]
     return random.choice(words)
 
@@ -61,7 +61,7 @@ async def guess(interaction: interactions.AppCommandContext):
     #First Embed
     embeded_msg = discord.Embed(title="Guess the Password!", description="Guess the Password", color=question_colour)
     embeded_msg.add_field(name="The password is either", value=f"{randword2} or {randword3} or {randword1}", inline=False)
-    await interaction.response.send_message(embed=embeded_msg) # type: ignore
+    await interaction.response.send_message(embed=embeded_msg) 
 
 
 
@@ -241,7 +241,7 @@ async def hangman(interaction: discord.Interaction, difficulty: int):
             
             if guess in guessed_letters:
                 await channel.send("You've already guessed that letter!")
-                continue
+                
             
             guessed_letters.append(guess)
             
@@ -249,21 +249,21 @@ async def hangman(interaction: discord.Interaction, difficulty: int):
                 new_display = ""
                 for i, letter in enumerate(chosen_word):
                     if letter == guess or display[i] != '_':
+                        print(i)
                         new_display += letter
                     else:
                         new_display += '_'
                 display = new_display
-                
-                if display == chosen_word:
-                    embeded_msg = discord.Embed(title="Congratulations!", description=f"You won the game! The word was: {chosen_word}")
-                    await channel.send(embed=embeded_msg)
-                    return
+                             
             else:
                 attempts -= 1
             
             embeded_msg = discord.Embed(title="Hangman", description=f"Attempts left: {attempts}\nWord: {display}\nGuessed Letters: {', '.join(guessed_letters)}")
             await channel.send(embed=embeded_msg)
         
+            if display == chosen_word:
+                embeded_msg = discord.Embed(title= "Good Job!",description="Well done!!")
+                await channel.send(embed=embeded_msg)
         if attempts == 0:
             embeded_msg = discord.Embed(title="Game Over!", description=f"You lost the game. The word was: {chosen_word}")
             await channel.send(embed=embeded_msg)
