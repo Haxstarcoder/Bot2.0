@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands, tasks
 import asyncio
 import random
-from discord import app_commands,Webhook,SyncWebhook
+from discord import app_commands
 from discord import interactions
 #discord.utils.setup_logging()
 
