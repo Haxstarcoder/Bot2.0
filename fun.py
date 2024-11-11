@@ -15,7 +15,7 @@ tree = app_commands.CommandTree(client)
 
 with open("D:/Code/Python/Bot2.0/All_Words.txt", "r") as file:
     listOfWords = file.read().splitlines()
-    file.close
+    file.close()
 #Colors
 fail_colour =  discord.Color.red()
 success_colour = discord.Color.green()
